@@ -14,7 +14,7 @@ register_matplotlib_converters()
 
 #constants
 test_index = 32
-step_value = 60
+step_value = 20
 
 rcParams['figure.figsize'] = 20, 10  # setting figure size
 
