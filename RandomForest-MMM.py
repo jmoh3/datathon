@@ -2,20 +2,27 @@
 import numpy as np
 from sklearn.model_selection import train_test_split
 from sklearn.ensemble import RandomForestRegressor
+from sklearn.metrics import r2_score
 
 
 # Read in data and display first 5 rows
-data = pd.read_csv('Data Given/MMM.csv')
-
+data = pd.read_csv('Data Given/MMM-edited.csv')
+# Q1 2018 -- January 1, 2018 to March 31, 2018
+# Q2 2018 -- April 1, 2018 to June 30, 2018
+# Q3 2018 -- July 1, 2018 to September 30, 2018
+# Q4 2018 -- October 1, 2018 to December 31, 2018
+# # Get dates for each quarter
+# Q1_start = datetime.strptime("1/1", '%m/%d/%Y')
 
 #setting index as date
-data['Year'] = data['Date'].apply(lambda x: int(str(x)[-4:]))
-# data['Date'] = pd.to_datetime(data.Date, format='%m/%d/%Y')
-# data.index = data['Date']
+#data['Year'] = data['Date'].apply(lambda x: int(str(x)[-4:]))
+#data['Date'] = pd.to_datetime(data.Date, format='%m/%d/%Y')
 
+# data.index = data['Date']
+#df['First Season'] = np.where(df['First Season'] > 1990, 1, df['First Season'])
 
 # One-hot encode the data using pandas get_dummies
-features = pd.get_dummies(data)
+#features = pd.get_dummies(data)
 
 # Create numpy array of data without Close
 labels = np.array(data['Close'])  # Labels are the values we want to predict
@@ -25,7 +32,7 @@ factors_list = list(data.columns)
 data = np.array(data)
 
 # Split the data into training and testing sets
-train_data, test_data, train_labels, test_labels = train_test_split(data, labels, test_size=0.25, random_state=42)
+train_data, test_data, train_labels, test_labels = train_test_split(data, labels, test_size=0.0127, shuffle=False)
 
 
 # Get baseline prediction
@@ -50,6 +57,14 @@ mape = 100 * (errors / test_labels)
 # Calculate and display accuracy
 accuracy = 100 - np.mean(mape)
 print('Accuracy:', round(accuracy, 2), '%.')
+
+
+
+r2 = r2_score(predictions, test_labels)
+print('R^2: ', round(r2, 2), '%.')
+
+
+
 
 # Get numerical feature importances
 importances = list(rf.feature_importances_)
