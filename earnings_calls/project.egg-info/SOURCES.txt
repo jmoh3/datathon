@@ -1,0 +1,13 @@
+setup.py
+earnings_calls/__init__.py
+earnings_calls/items.py
+earnings_calls/middlewares.py
+earnings_calls/pipelines.py
+earnings_calls/settings.py
+earnings_calls/spiders/__init__.py
+earnings_calls/spiders/earnings_calls_scraper.py
+project.egg-info/PKG-INFO
+project.egg-info/SOURCES.txt
+project.egg-info/dependency_links.txt
+project.egg-info/entry_points.txt
+project.egg-info/top_level.txt
