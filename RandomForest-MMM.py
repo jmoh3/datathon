@@ -2,34 +2,34 @@ import pandas as pd
 import numpy as np
 from sklearn.model_selection import train_test_split
 from sklearn.ensemble import RandomForestRegressor
+from sklearn.metrics import r2_score
+import matplotlib.pyplot as plt
 
 
 # Read in data and display first 5 rows
-data = pd.read_csv('Data Given/MMM.csv')
+data = pd.read_csv('Data Given/MMM-edited.csv')
 
+#adding date columns
+date = data['Date'].str.split('/', expand=True)
+data['Month'] = date[0]
+data['Day'] = date[1]
+data['Year'] = date[2]
 
-#setting index as date
-data['Year'] = data['Date'].apply(lambda x: int(str(x)[-4:]))
-# data['Date'] = pd.to_datetime(data.Date, format='%m/%d/%Y')
-# data.index = data['Date']
-
-
-# One-hot encode the data using pandas get_dummies
-features = pd.get_dummies(data)
 
 # Create numpy array of data without Close
 labels = np.array(data['Close'])  # Labels are the values we want to predict
+dates = np.array(data['Date'])
 data = data.drop('Close', axis=1)
 data = data.drop('Date', axis=1)
 factors_list = list(data.columns)
 data = np.array(data)
 
 # Split the data into training and testing sets
-train_data, test_data, train_labels, test_labels = train_test_split(data, labels, test_size=0.25, random_state=42)
+train_data, test_data, train_labels, test_labels, train_date, test_date = train_test_split(data, labels, dates, test_size=0.0127, shuffle=False)
 
 
 # Get baseline prediction
-average_close = labels.mean()
+average_close = train_labels.mean()
 baseline_errors = abs(average_close - test_labels)
 average_baseline_error = round(np.mean(baseline_errors), 2)
 print('Average baseline error: ', average_baseline_error)
@@ -41,6 +41,7 @@ rf.fit(train_data, train_labels);
 
 # Use the forest's predict method on the test data
 predictions = rf.predict(test_data)
+
 # Calculate errors
 errors = abs(predictions - test_labels)
 print('Mean Absolute Error:', round(np.mean(errors), 2), 'degrees.')
@@ -51,6 +52,11 @@ mape = 100 * (errors / test_labels)
 accuracy = 100 - np.mean(mape)
 print('Accuracy:', round(accuracy, 2), '%.')
 
+
+
+r2 = r2_score(predictions, test_labels)
+print('R^2: ', round(r2, 2), '%.')
+
 # Get numerical feature importances
 importances = list(rf.feature_importances_)
 # List of tuples with variable and importance
@@ -59,3 +65,18 @@ feature_importances = [(feature, round(importance, 2)) for feature, importance i
 feature_importances = sorted(feature_importances, key = lambda x: x[1], reverse = True)
 # Print out the feature and importances
 [print('Variable: {:20} Importance: {}'.format(*pair)) for pair in feature_importances];
+
+
+training = pd.DataFrame({'Date': train_date, 'Close': train_labels})
+training.index = training['Date']
+actual = pd.DataFrame({'Date': test_date, 'Close': test_labels})
+actual.index = actual['Date']
+predicted = pd.DataFrame({'Date': test_date, 'Close': predictions})
+predicted.index = predicted['Date']
+
+#plot
+plt.figure(figsize=(16, 8))
+plt.plot(training['Close'])
+plt.plot(actual['Close'])
+plt.plot(predicted['Close'])
+plt.show()
