@@ -14,7 +14,7 @@ register_matplotlib_converters()
 
 #constants
 test_index = 32
-step_value = 20
+step_value = 60
 
 rcParams['figure.figsize'] = 20, 10  # setting figure size
 
@@ -26,7 +26,7 @@ df = pd.read_csv('Data Given/MMM.csv')
 print(df.head())
 
 #setting index as date
-df['Date'] = pd.to_datetime(df.Date, format='%m/%d/%Y')
+df['Date'] = pd.to_datetime(df.Date, format='%m/%d/%y')
 #df['Date'] = pd.to_datetime(df.Date,format='%Y-%m-%d')
 df.index = df['Date']
 

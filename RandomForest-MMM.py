@@ -7,38 +7,13 @@ import matplotlib.pyplot as plt
 
 
 # Read in data and display first 5 rows
-data = pd.read_csv('Data Given/MMM-edited.csv')
-# Q1 2018 -- January 1, 2018 to March 31, 2018
-# Q2 2018 -- April 1, 2018 to June 30, 2018
-# Q3 2018 -- July 1, 2018 to September 30, 2018
-# Q4 2018 -- October 1, 2018 to December 31, 2018
-# # Get dates for each quarter
-# Q1_start = datetime.strptime("1/1", '%m/%d/%Y')
-def quarters(row):
-    if 1 <= row['Month'] <= 3:
-        val = 'Q1'
-    elif 4 <= row['Month'] <= 6:
-        val = 'Q2'
-    elif 7 <= row['Month'] <= 9:
-        val = 'Q3'
-    else:
-        val = 'Q4'
-    return val
+data = pd.read_csv('Data Given/MMM.csv')
 
-#setting index as date
-# data['Year'] = data['Date'].apply(lambda x: int(str(x)[-4:]))
-#data['Date'] = pd.to_datetime(data.Date, format='%m/%d/%y')
+#adding date columns
 date = data['Date'].str.split('/', expand=True)
-data['Month'] = date[0].astype(np.int64)
-data['Day'] = date[1].astype(np.int64)
-data['Year'] = date[2].astype(np.int64)
-data['Quarter'] = data.apply(quarters, axis=1)
-
-
-
-print(data)
-
-# One-hot encode the data using pandas get_dummies
+data['Month'] = date[0]
+data['Day'] = date[1]
+data['Year'] = date[2]
 
 
 # Create numpy array of data without Close
@@ -46,16 +21,15 @@ labels = np.array(data['Close'])  # Labels are the values we want to predict
 dates = np.array(data['Date'])
 data = data.drop('Close', axis=1)
 data = data.drop('Date', axis=1)
-data = pd.get_dummies(data)
 factors_list = list(data.columns)
-print(factors_list)
 data = np.array(data)
 
 # Split the data into training and testing sets
 train_data, test_data, train_labels, test_labels, train_date, test_date = train_test_split(data, labels, dates, test_size=0.0127, shuffle=False)
 
+
 # Get baseline prediction
-average_close = labels.mean()
+average_close = train_labels.mean()
 baseline_errors = abs(average_close - test_labels)
 average_baseline_error = round(np.mean(baseline_errors), 2)
 print('Average baseline error: ', average_baseline_error)
@@ -100,9 +74,9 @@ actual.index = actual['Date']
 predicted = pd.DataFrame({'Date': test_date, 'Close': predictions})
 predicted.index = predicted['Date']
 
-# #plot
-plt.figure(figsize=(16, 8))
-plt.plot(training['Close'])
-plt.plot(actual['Close'])
-plt.plot(predicted['Close'])
-plt.show()
+#plot
+# plt.figure(figsize=(16, 8))
+# plt.plot(training['Close'])
+# plt.plot(actual['Close'])
+# plt.plot(predicted['Close'])
+# plt.show()
