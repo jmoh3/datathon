@@ -30,7 +30,7 @@ factors_list = list(data.columns)
 data = np.array(data)
 print(data)
 # Split the data into training and testing sets
-train_data, test_data, train_labels, test_labels, train_date, test_date = train_test_split(data, labels, dates, test_size=0.01302, shuffle=False)
+train_data, test_data, train_labels, test_labels, train_date, test_date = train_test_split(data, labels, dates, test_size=0.030, shuffle=False)
 
 
 # Get baseline prediction
