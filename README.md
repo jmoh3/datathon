@@ -10,12 +10,22 @@ In the Illini Statistics Club's 2nd annual Datathon, participants will work in t
 Daily closing prices
 
 
-## Our approach
+## Our Approach
 
-We trained an LSTM and a Random Forest Regressor for each of the four companies whose stock prices we were trying to predict.
+We trained an LSTM and a Random Forest Regressor for each of the four companies whose stock prices we were trying to predict. 
 
-[Link to presentation](https://docs.google.com/presentation/d/1qx68fOe24hWx3unDKybXOo7yEOLRiglqVIRrKWqjLBg/edit?usp=sharing)
+[Our Presentation](https://docs.google.com/presentation/d/1qx68fOe24hWx3unDKybXOo7yEOLRiglqVIRrKWqjLBg/edit?usp=sharing)
 
-[Link to business thesis](https://docs.google.com/document/d/1kCpWRBZcaNePt3X0s1gj4_vuMvv9tEQdmaVYndi0cKo/edit?usp=sharing)
+[Our Business Thesis](https://docs.google.com/document/d/1kCpWRBZcaNePt3X0s1gj4_vuMvv9tEQdmaVYndi0cKo/edit?usp=sharing)
 
 ![stonks](very_important_and_confidential_file.png)
+
+
+## Libraries and APIs
+* Keras (with TensorFlow backend)
+* Sklearn
+* NLTK
+* Scrapy
+* PushShiftAPI
+* TwitterSearch
+* Plotly
