@@ -11,24 +11,12 @@ import math
 df = pd.read_csv('/Users/Fizag/Docs/Extracurriculars/CSProjects/Datathon2019/datathon/Aggregated Data/BAYZF-Aggregated.csv')
 sentiment = pd.read_csv('/Users/Fizag/Docs/Extracurriculars/CSProjects/Datathon2019/datathon/news_article_sentiments/BAYZF-sentiment.csv')
 
-# pos = np.array(sentiment['pos'])
-# pos = pos[np.logical_not(np.isnan(pos))]
-# pos_average = pos.mean()
-# print(pos_average)
-# neu = np.array(sentiment['neu'])
-# neu = pos[np.logical_not(np.isnan(neu))]
-# neu_average = neu.mean()
-# print(neu_average)
-# neg = np.array(sentiment['neg'])
-# neg = neg[np.logical_not(np.isnan(neg))]
-# neg_average = neg.mean()
-# print(neg_average)
+# get compound average to fill in NaN
 compound = np.array(sentiment['compound'])
 compound = compound[np.logical_not(np.isnan(compound))]
 compound_average = compound.mean()
-print(compound_average)
 
-#data.join(data.set_index(['Date'], verify_integrity=True), on=['Date'], how='left' )
+# merge df and sentiment based on date
 data = pd.merge(df, sentiment,  how='left', left_on=['Date'], right_on = ['Date'])
 
 #adding date columns
@@ -36,7 +24,7 @@ date = data['Date'].str.split('/', expand=True)
 data['Month'] = date[0]
 data['Day'] = date[1]
 data['Year'] = date[2]
-
+data['compound'].fillna(compound_average, inplace=True)
 
 # Create numpy array of data without Close
 data = data[np.isfinite(data['AvgClose60Days'])]
@@ -46,7 +34,9 @@ data = data.drop('Close', axis=1)
 data = data.drop('Date', axis=1)
 data = data.drop('JNJ', axis=1)
 data = data.drop('NVS', axis=1)
-data = data.drop('DOW', axis=1)
+data = data.drop('pos', axis=1)
+data = data.drop('neg', axis=1)
+data = data.drop('neu', axis=1)
 factors_list = list(data.columns)
 data = np.array(data)
 print(factors_list)
