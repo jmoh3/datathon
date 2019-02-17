@@ -7,7 +7,7 @@ import matplotlib.pyplot as plt
 
 
 # Read in data and display first 5 rows
-data = pd.read_csv('Data Given/MMM.csv')
+data = pd.read_csv('Data Given/MMM-edited.csv')
 
 #adding date columns
 date = data['Date'].str.split('/', expand=True)
@@ -75,8 +75,8 @@ predicted = pd.DataFrame({'Date': test_date, 'Close': predictions})
 predicted.index = predicted['Date']
 
 #plot
-# plt.figure(figsize=(16, 8))
-# plt.plot(training['Close'])
-# plt.plot(actual['Close'])
-# plt.plot(predicted['Close'])
-# plt.show()
+plt.figure(figsize=(16, 8))
+plt.plot(training['Close'])
+plt.plot(actual['Close'])
+plt.plot(predicted['Close'])
+plt.show()
