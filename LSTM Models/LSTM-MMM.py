@@ -84,7 +84,7 @@ model.add(LSTM(units=50))
 model.add(Dense(1))
 
 model.compile(loss='mean_squared_error', optimizer='adam')
-model.fit(x_train, y_train, epochs=10, batch_size=1, verbose=2)
+model.fit(x_train, y_train, epochs=1, batch_size=1, verbose=2)
 
 # scale test inputs and convert to x_test
 inputs = new_data[0:len(test) + step_value].values
