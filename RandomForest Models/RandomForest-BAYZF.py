@@ -8,7 +8,28 @@ import math
 
 
 # Read in data and display first 5 rows
-data = pd.read_csv('/Users/jackieoh/datathon/Aggregated Data/BAYZF-Aggregated.csv')
+df = pd.read_csv('/Users/Fizag/Docs/Extracurriculars/CSProjects/Datathon2019/datathon/Aggregated Data/BAYZF-Aggregated.csv')
+sentiment = pd.read_csv('/Users/Fizag/Docs/Extracurriculars/CSProjects/Datathon2019/datathon/news_article_sentiments/BAYZF-sentiment.csv')
+
+# pos = np.array(sentiment['pos'])
+# pos = pos[np.logical_not(np.isnan(pos))]
+# pos_average = pos.mean()
+# print(pos_average)
+# neu = np.array(sentiment['neu'])
+# neu = pos[np.logical_not(np.isnan(neu))]
+# neu_average = neu.mean()
+# print(neu_average)
+# neg = np.array(sentiment['neg'])
+# neg = neg[np.logical_not(np.isnan(neg))]
+# neg_average = neg.mean()
+# print(neg_average)
+compound = np.array(sentiment['compound'])
+compound = compound[np.logical_not(np.isnan(compound))]
+compound_average = compound.mean()
+print(compound_average)
+
+#data.join(data.set_index(['Date'], verify_integrity=True), on=['Date'], how='left' )
+data = pd.merge(df, sentiment,  how='left', left_on=['Date'], right_on = ['Date'])
 
 #adding date columns
 date = data['Date'].str.split('/', expand=True)
@@ -28,7 +49,7 @@ data = data.drop('NVS', axis=1)
 data = data.drop('DOW', axis=1)
 factors_list = list(data.columns)
 data = np.array(data)
-print(data)
+print(factors_list)
 # Split the data into training and testing sets
 train_data, test_data, train_labels, test_labels, train_date, test_date = train_test_split(data, labels, dates, test_size=0.0132, shuffle=False)
 
@@ -88,8 +109,8 @@ print()
 print("THIS IS THE PREDICTED DATA")
 print(predicted)
 #plot
-plt.figure(figsize=(16, 8))
-plt.plot(training['Close'])
-plt.plot(actual['Close'])
-plt.plot(predicted['Close'])
-plt.show()
+# plt.figure(figsize=(16, 8))
+# plt.plot(training['Close'])
+# plt.plot(actual['Close'])
+# plt.plot(predicted['Close'])
+# plt.show()
