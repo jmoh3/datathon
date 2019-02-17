@@ -14,24 +14,41 @@ data = pd.read_csv('Data Given/MMM-edited.csv')
 # Q4 2018 -- October 1, 2018 to December 31, 2018
 # # Get dates for each quarter
 # Q1_start = datetime.strptime("1/1", '%m/%d/%Y')
+def quarters(row):
+    if 1 <= row['Month'] <= 3:
+        val = 'Q1'
+    elif 4 <= row['Month'] <= 6:
+        val = 'Q2'
+    elif 7 <= row['Month'] <= 9:
+        val = 'Q3'
+    else:
+        val = 'Q4'
+    return val
 
 #setting index as date
 # data['Year'] = data['Date'].apply(lambda x: int(str(x)[-4:]))
 #data['Date'] = pd.to_datetime(data.Date, format='%m/%d/%y')
 date = data['Date'].str.split('/', expand=True)
-data['Month'] = date[0]
-data['Day'] = date[1]
-data['Year'] = date[2]
+data['Month'] = date[0].astype(np.int64)
+data['Day'] = date[1].astype(np.int64)
+data['Year'] = date[2].astype(np.int64)
+data['Quarter'] = data.apply(quarters, axis=1)
+
+
+
+print(data)
 
 # One-hot encode the data using pandas get_dummies
-#features = pd.get_dummies(data)
+
 
 # Create numpy array of data without Close
 labels = np.array(data['Close'])  # Labels are the values we want to predict
 dates = np.array(data['Date'])
 data = data.drop('Close', axis=1)
 data = data.drop('Date', axis=1)
+data = pd.get_dummies(data)
 factors_list = list(data.columns)
+print(factors_list)
 data = np.array(data)
 
 # Split the data into training and testing sets
