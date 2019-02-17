@@ -8,7 +8,7 @@ import math
 
 
 # Read in data and display first 5 rows
-data = pd.read_csv('Data Given/MMM-Aggregated.csv')
+data = pd.read_csv('Data Given/SYF-Aggregated.csv')
 
 #adding date columns
 date = data['Date'].str.split('/', expand=True)
@@ -23,8 +23,8 @@ labels = np.array(data['Close'])  # Labels are the values we want to predict
 dates = np.array(data['Date'])
 data = data.drop('Close', axis=1)
 data = data.drop('Date', axis=1)
-data = data.drop('HON', axis=1)
-data = data.drop('ITW', axis=1)
+data = data.drop('Discover', axis=1)
+data = data.drop('OMF', axis=1)
 data = data.drop('DOW', axis=1)
 factors_list = list(data.columns)
 data = np.array(data)

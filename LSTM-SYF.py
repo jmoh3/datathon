@@ -23,7 +23,7 @@ step_value = 60
 rcParams['figure.figsize'] = 20, 10  # setting figure size
 scaler = MinMaxScaler(feature_range=(0, 1))  # for normalizing data
 
-df = pd.read_csv('Data Given/MMM.csv')
+df = pd.read_csv('Data Given/SYF.csv')
 
 #setting index as date
 df['Date'] = pd.to_datetime(df.Date, format='%m/%d/%y')
@@ -84,7 +84,7 @@ model.add(LSTM(units=50))
 model.add(Dense(1))
 
 model.compile(loss='mean_squared_error', optimizer='adam')
-model.fit(x_train, y_train, epochs=10, batch_size=1, verbose=2)
+model.fit(x_train, y_train, epochs=1, batch_size=1, verbose=2)
 
 # scale test inputs and convert to x_test
 inputs = new_data[0:len(test) + step_value].values
