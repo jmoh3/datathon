@@ -23,7 +23,7 @@ step_value = 60
 rcParams['figure.figsize'] = 20, 10  # setting figure size
 scaler = MinMaxScaler(feature_range=(0, 1))  # for normalizing data
 
-df = pd.read_csv('/Users/Fizag/Docs/Extracurriculars/CSProjects/Datathon2019/datathon/Data Given/SYF.csv')
+df = pd.read_csv('Data Given/SYF.csv')
 
 #setting index as date
 df['Date'] = pd.to_datetime(df.Date, format='%m/%d/%y')
