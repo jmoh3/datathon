@@ -8,8 +8,8 @@ import math
 
 
 # Read in data and display first 5 rows
-df = pd.read_csv('/Users/Fizag/Docs/Extracurriculars/CSProjects/Datathon2019/datathon/Aggregated Data/BAYZF-Aggregated.csv')
-sentiment = pd.read_csv('/Users/Fizag/Docs/Extracurriculars/CSProjects/Datathon2019/datathon/news_article_sentiments/BAYZF-sentiment.csv')
+df = pd.read_csv('Aggregated Data/BAYZF-Aggregated.csv')
+sentiment = pd.read_csv('news_article_sentiments/BAYZF-sentiment.csv')
 
 # get compound average to fill in NaN
 compound = np.array(sentiment['compound'])

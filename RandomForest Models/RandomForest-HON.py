@@ -8,7 +8,7 @@ import math
 
 
 # Read in data and display first 5 rows
-data = pd.read_csv('/Users/Fizag/Docs/Extracurriculars/CSProjects/Datathon2019/datathon/Aggregated Data/HON-Aggregated.csv')
+data = pd.read_csv('Aggregated Data/HON-Aggregated.csv')
 
 #adding date columns
 date = data['Date'].str.split('/', expand=True)
